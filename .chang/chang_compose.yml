@@ -1,0 +1,19 @@
+environment:
+  - RUBY_VERSION=2.7.2
+  - RUBY_IMAGE=majkel/ruby-node-headway:ruby_${RUBY_VERSION}_node_14.15.1_yarn_1.22.5_mjml_4.7.1
+  - YARN_CACHE_FOLDER=/home/app/.cache/yarn
+
+services:
+
+  app:
+    image: ${RUBY_IMAGE}
+    command: yarn run gatsby develop --host 0.0.0.0 --port 8080
+    volumes:
+      - chang:/app:nocopy
+      - yarn-node_modules-cache:/app/node_modules
+      - CHANG_SHARED_VOLUME_tmp:/app/tmp
+      - CHANG_SHARED_VOLUME_dot-cache:/home/app/.cache
+    working_dir: /app
+
+server:
+  root: app:8080

@@ -1,0 +1,1 @@
+chang_compose kill ${@:-app}

@@ -1,0 +1,1 @@
+chang_exec app yarn "${@:-install}"

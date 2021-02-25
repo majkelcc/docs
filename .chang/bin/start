@@ -1,0 +1,21 @@
+ chang_start
+
+if [[ -n ${1:-} ]]; then
+  chang_compose up -d "$@"
+else
+  if ! chang_compare_commit package.json; then
+    chang_compose kill app
+    chang yarn install
+    chang_update_commit package.json
+  fi
+
+  chang_compose up -d app
+fi
+
+echo
+chang ps
+echo
+
+if $CHANG_REV_PROXY_ENABLED; then
+  echo "Running at: http://${CHANG_APP_NAME}.${CHANG_REV_PROXY_TLD}"
+fi
